@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Recepto redagavimas</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Recepto redagavimas</h1>
+    <hr>
+    <h2>Paredaguokite recepto duomenis</h2>
+
+    <form th:action="@{/receptas/idejo_recepta}" th:object="${receptas}" method="POST">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{receptoKurejas.id}">
+        <input th:field="*{pavadinimas}" type="text"  class="form-control mb-4 col-4">
+        <input th:field="*{nurodymai}" type="text"  class="form-control mb-4 col-4">
+        <input th:field="*{kalorijosPer100g}" type="number"  class="form-control mb-4 col-4">
+        <input th:field="*{kaina}" type="number"  class="form-control mb-4 col-4">
+        <input th:value="${pavadinimai}" type="text" name="pavadinimas" >
+        <select th:field="*{receptoKategorija.id}" class="form-control" id="dropDownList">
+            <option th:each="kategorija : ${kategorijos}" th:value="${kategorija.getId()}" th:text="${kategorija.getPavadinimas()}" th:selected="receptoKategorija.id"></option>
+        </select>
+        <button type="submit" class="btn btn-info col-2">Išsaugokite receptą</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/}"> Grįžti atgal</a>
+</div>
+</body>
+</html>

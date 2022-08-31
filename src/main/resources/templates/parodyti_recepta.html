@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+<table class="table table-striped">
+    <tr>
+        <th>Pavadinimas</th>
+        <td th:text="${pavadinimas}"></td>
+    </tr>
+    <tr>
+        <th>Nurodymai:</th>
+        <td th:text="${nurodymai}"></td>
+    </tr>
+    <tr>
+        <th>Kalorijos per 100g</th>
+        <td th:text="${kalorijosPer100g}"></td>
+    </tr>
+    <tr>
+        <th>Kaina</th>
+        <td th:text="${kaina}"></td>
+    </tr>
+
+    <tr>
+        <th>Recepto kategorija</th>
+        <td th:text="${receptoKategorija.getPavadinimas}"></td>
+    </tr>
+    <tr>
+        <th>Ingredientai:</th>
+        <td>
+            <ul th:each="ingredientas : ${receptoIngredientai}" class="list-group">
+                <li th:text="${ingredientas.getPavadinimas}" class="list-group-item"></li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+
+        <th>Recepto kurejas</th>
+        <td th:text="${receptoKurejas.getUsername}"></td>
+    </tr>
+</table>
+<form th:action="@{/recep/paieska}">
+<button class="btn btn-secondary" type="submit">Eiti i receptu paieska pagal pavadinima</button>
+</form>
+<br>
+<form th:action="@{'/recep/istrinti_recepta/' + ${id}}" method="post">
+    <input type="submit" value="Ištrinti receptą">
+</form>
+<br>
+<form th:action="@{'/vartotojas/pamegti_recepta/' + ${id}}" method="post">
+    <input type="submit" value="Pridėti receptą į mėgstamus">
+</form>
+<br>
+<form th:action="@{'/recep/ideti_ingredientus/' + ${id}}" method="get">
+    <input type="submit" value="Pridėti recepto ingredientus">
+</form>
+<br>
+<form th:action="@{'/recep/redaguoti_recepta/' + ${id}}" method="get">
+    <input type="submit" value="Redaguoti receptą">
+</form>
+</body>
+</html>
