@@ -7,17 +7,13 @@ import lt.imones.puslapis.projektopavadinimas.model.repository.IngredientaiRepos
 import lt.imones.puslapis.projektopavadinimas.model.repository.KategorijosRepository;
 import lt.imones.puslapis.projektopavadinimas.model.repository.ReceptasRepository;
 import lt.imones.puslapis.projektopavadinimas.model.repository.VartotojoRepository;
-<<<<<<< HEAD
-import lt.imones.puslapis.projektopavadinimas.services.ReceptoService;
-=======
 import lt.imones.puslapis.projektopavadinimas.service.ReceptoService;
->>>>>>> 97723a3da8cf3800b94668c338265c4755b8f531
+import lt.imones.puslapis.projektopavadinimas.services.ReceptoServiceSenas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -34,10 +30,8 @@ public class ReceptasMVController {
     VartotojoRepository vartotojoRepository;
 
     @Autowired
-    IngredientaiRepository ingredienturepository;
+    IngredientaiRepository ingredientaiRepository;
 
-    @Autowired
-    ReceptoService receptoService;
 
     @GetMapping("/test/sveikinimas")
     String testineFuncija(Model model, @RequestParam String vardas) {
@@ -74,17 +68,18 @@ public class ReceptasMVController {
         return "ideti_recepta.html";
     }
 
-    @PostMapping("/receptas/idejo_recepta")
-    String pridetiRecepta(@ModelAttribute Receptai ivedamasReceptas) {
+    @PostMapping("/recepto/idejo_recepta")
+    String pridetiRecepta(@ModelAttribute Receptai ivedamasReceptas,@RequestParam String ingredientai) {
+        Set<Ingredientai> ingrePavadinimas = receptoService.KonvertavimasIsStringISet(ingredientai);
+        ivedamasReceptas.setReceptoIngredientai(ingrePavadinimas);
         receptasRepository.save(ivedamasReceptas);
         return "idetas_receptas.html";
     }
 
     @GetMapping("/recep/redaguoti_recepta/{id}")
     String redaguotiRecepta(Model model, @PathVariable long id) {
-       // idetiIngredientus(model,id,ingredientai);
         Receptai receptas = receptasRepository.findById(id);
-        model.addAttribute("pavadinimai",receptoService.ingredientuSetuConvertatorius(receptas.getReceptoIngredientai()));
+        model.addAttribute("ingredientai", receptoService.ingredientuSetuConvertatorius(receptas.getReceptoIngredientai()));
         model.addAttribute("receptas", receptas);
         model.addAttribute("kategorijos", kategorijosRepository.findAll());
         return "recepto_redagavimas.html";
@@ -108,16 +103,12 @@ public class ReceptasMVController {
     @PostMapping("/recep/ideti_ingredientus")
     String ingreIdetas(Model model, @ModelAttribute IngredientaiDto ingredientai) {
         Receptai isaugomasReceptas = receptasRepository.findById(ingredientai.getReceptoId());
-<<<<<<< HEAD
         Set<Ingredientai> ingreSet = isaugomasReceptas.getReceptoIngredientai();
-        String stringingre = receptoService.ingredientuSetuConvertatorius(ingreSet);
+        String stringingre = receptoService.konvertavimasIsSetIString(ingreSet);
         String sudetas = stringingre + ingredientai.getPavadinimai();
-        System.out.println(sudetas);
-        isaugomasReceptas.setReceptoIngredientai(receptoService.ingreStringConvertavimasISet(sudetas));
-=======
-        Set<Ingredientai> ingreSet = receptoService.KonvertavimasIsStringISet(ingredientai.getPavadinimai());
+        isaugomasReceptas.setReceptoIngredientai(receptoService.KonvertavimasIsStringISet(sudetas));
+        receptoService.KonvertavimasIsStringISet(ingredientai.getPavadinimai());
         isaugomasReceptas.setReceptoIngredientai(ingreSet);
->>>>>>> 97723a3da8cf3800b94668c338265c4755b8f531
         receptasRepository.save(isaugomasReceptas);
         return "puslapis2.html";
     }

@@ -34,4 +34,12 @@ public class ReceptoService {
         }
         return ingreString.toString();
     }
+    public String ingredientuSetuConvertatorius(Set<Ingredientai> ingredientai){
+        StringBuilder ingrePavadinimas = new StringBuilder();
+        for (Ingredientai ingredientas : ingredientai) {
+            ingrePavadinimas.append(ingredientas.getPavadinimas());
+            ingrePavadinimas.append(",");
+        }
+        return ingrePavadinimas.toString();
+    }
 }

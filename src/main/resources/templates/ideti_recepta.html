@@ -20,6 +20,7 @@
         <input th:field="*{nurodymai}" type="text"  placeholder="Recepto nurodymai" class="form-control mb-4 col-4">
         <input th:field="*{kalorijosPer100g}" type="text"  placeholder="Recepto kalorijos per 100g" class="form-control mb-4 col-4">
         <input th:field="*{kaina}" type="text"  placeholder="Recepto kaina" class="form-control mb-4 col-4">
+        <input th:field="*{receptoIngredientai}" type="text" name="ingredientas" >
         <select th:field="*{receptoKategorija.id}" class="form-control" id="dropDownList">
             <option th:each="kategorija : ${kategorijos}" th:value="${kategorija.getId()}" th:text="${kategorija.getPavadinimas()}"></option>
         </select>
