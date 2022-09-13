@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Ideti kategorija</title>
+    <title>Kategorijos receptai</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet"
@@ -10,10 +10,8 @@
           crossorigin="anonymous">
 </head>
 <body>
-<form th:action="@{/kategorija/ideti_kategorija}" method="post">
-    <input type="text" name="pavadinimas">
-    <input type="submit" value="Įdėkite kategoriją">
-</form>
-<button type="button" class="btn col-2"><a href="/recep/meniu">Eiti i meniu</a></button>
+<button type="button" class="btn col-2"><a href="/recep/paieska">Recepto paieska</a></button>
+<button type="button" class="btn col-2"><a href="/recepto/recepto_idejimas">Recepto idejimas</a></button>
+<button type="button" class="btn col-2"><a href="/recep/visi_receptai">visi Receptai</a></button>
 </body>
 </html>

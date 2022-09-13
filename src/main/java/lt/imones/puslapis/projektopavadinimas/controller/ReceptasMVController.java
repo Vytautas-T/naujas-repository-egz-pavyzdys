@@ -2,18 +2,19 @@ package lt.imones.puslapis.projektopavadinimas.controller;
 
 import lt.imones.puslapis.projektopavadinimas.model.dto.IngredientaiDto;
 import lt.imones.puslapis.projektopavadinimas.model.entity.Ingredientai;
+import lt.imones.puslapis.projektopavadinimas.model.entity.Kategorija;
 import lt.imones.puslapis.projektopavadinimas.model.entity.Receptai;
 import lt.imones.puslapis.projektopavadinimas.model.repository.IngredientaiRepository;
 import lt.imones.puslapis.projektopavadinimas.model.repository.KategorijosRepository;
 import lt.imones.puslapis.projektopavadinimas.model.repository.ReceptasRepository;
 import lt.imones.puslapis.projektopavadinimas.model.repository.VartotojoRepository;
 import lt.imones.puslapis.projektopavadinimas.service.ReceptoService;
-import lt.imones.puslapis.projektopavadinimas.services.ReceptoServiceSenas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -54,6 +55,32 @@ public class ReceptasMVController {
         return "parodyti_recepta.html";
     }
 
+    @GetMapping("/rasti/rasti_recepta_id")
+    String ieskomasReceptasPagalId(Model model, @RequestParam int id) {
+        Receptai receptas = receptasRepository.findById(id);
+        model.addAttribute("id", receptas.getId());
+        model.addAttribute("pavadinimas", receptas.getPavadinimas());
+        model.addAttribute("nurodymai", receptas.getNurodymai());
+        model.addAttribute("kalorijosPer100g", receptas.getKalorijosPer100g());
+        model.addAttribute("kaina", receptas.getKaina());
+        model.addAttribute("receptoIngredientai", receptas.getReceptoIngredientai());
+        model.addAttribute("receptoKurejas", receptas.getReceptoKurejas());
+        model.addAttribute("receptoKategorija", receptas.getReceptoKategorija());
+        return "parodyti_recepta.html";
+    }
+
+    @GetMapping("/recep/visi_receptai")
+    String rodytiVisusReceptus(Model model){
+        List<Receptai> visisReceptai = receptasRepository.findAll();
+        model.addAttribute("visiReceptai", visisReceptai);
+        return "visi_receptai.html";
+    }
+
+    @GetMapping("recep/meniu")
+        String receptmeniu(Model model){
+        return "meniu.html";
+    }
+
     @GetMapping("/recep/paieska")
     String testPaieska(Model model) {
         return "rasti_recepta.html";
@@ -61,6 +88,8 @@ public class ReceptasMVController {
 
     @GetMapping("/recepto/recepto_idejimas")
     String receptoIdejimas(Model model) {
+        String ingredientai = "";
+        Set ingreSet = receptoService.KonvertavimasIsStringISet(ingredientai);
         Receptai receptas = new Receptai();
         model.addAttribute("receptas", receptas);
         model.addAttribute("kategorijos", kategorijosRepository.findAll());

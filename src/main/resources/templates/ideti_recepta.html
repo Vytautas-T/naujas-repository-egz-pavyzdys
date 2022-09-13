@@ -20,7 +20,8 @@
         <input th:field="*{nurodymai}" type="text"  placeholder="Recepto nurodymai" class="form-control mb-4 col-4">
         <input th:field="*{kalorijosPer100g}" type="text"  placeholder="Recepto kalorijos per 100g" class="form-control mb-4 col-4">
         <input th:field="*{kaina}" type="text"  placeholder="Recepto kaina" class="form-control mb-4 col-4">
-        <input th:field="*{receptoIngredientai}" type="text" name="ingredientas" >
+        <input th:value="${ingredientai}" type="text" name="ingredientai" >
+        <br>
         <select th:field="*{receptoKategorija.id}" class="form-control" id="dropDownList">
             <option th:each="kategorija : ${kategorijos}" th:value="${kategorija.getId()}" th:text="${kategorija.getPavadinimas()}"></option>
         </select>
@@ -36,7 +37,8 @@
 
     <hr>
 
-    <a th:href="@{/}"> Grįžti atgal</a>
+    <br>
+    <button type="button" class="btn col-2"><a href="/recep/meniu">Eiti i meniu</a></button>
 </div>
 </body>
 </html>

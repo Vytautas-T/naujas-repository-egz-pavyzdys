@@ -1,4 +1,4 @@
-package lt.imones.puslapis.projektopavadinimas.services;
+package lt.imones.puslapis.projektopavadinimas.servicesSenas;
 
 import lt.imones.puslapis.projektopavadinimas.model.entity.Ingredientai;
 import lt.imones.puslapis.projektopavadinimas.model.repository.IngredientaiRepository;
